@@ -144,7 +144,10 @@ export default function NewRecipes() {
 
             {/* recipes here */}
             Current Recipe
-            <div className="recipe-list">
+            <div className="new-recipe-title">
+                <TextField id="standard-basic" label="Recipe Name" />
+            </div>
+            <div className="new-recipe-list">
                 <List >
                     {Object.values(ingredientList).map((ingredient) =>
                         <ListItem key={ingredient.productId.value} divider>
