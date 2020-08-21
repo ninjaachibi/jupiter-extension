@@ -76,47 +76,62 @@ export default function NewRecipes() {
     }, [open]);
     // TODO: add save, cancel buttons
 
-    return (<>
-        <SectionHeader
-            title="New recipe"
-            subtitle="Create a new recipe"
-        />
-        <Autocomplete
-            id="asynchronous-demo"
-            style={{ width: 300 }}
-            open={open}
-            onOpen={() => {
-                setOpen(true);
-            }}
-            onClose={() => {
-                setOpen(false);
-            }}
-            getOptionSelected={(option, value) => option.name === value.name}
-            getOptionLabel={(option) => option.name}
-            options={options}
-            loading={loading}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    onChange={(evt) => {
-                        // console.log(evt.target.value); 
-                        setQueryString(evt.target.value);
-                    }}
-                    label="Search for ingredients"
-                    variant="outlined"
-                    InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                            <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                {params.InputProps.endAdornment}
-                            </React.Fragment>
-                        ),
-                    }}
-                />
-            )}
-        />
-    </>
+    return (
+        <>
+            <SectionHeader
+                title="New recipe"
+                subtitle="Create a new recipe"
+            />
+            <Autocomplete
+                id="asynchronous-demo"
+                style={{ width: 300 }}
+                open={open}
+                onOpen={() => {
+                    setOpen(true);
+                }}
+                onClose={() => {
+                    setOpen(false);
+                }}
+                onChange={(evt, val, reason) => {
+                    console.log(evt, val, reason)
+                    if (reason === 'select-option') {
+                        setIngredientList([...ingredientList, val]); // TODO: don't allow duplicates
+                        setQueryString("")
+                    }
+                }}
+                getOptionSelected={(option, value) => option.name === value.name}
+                getOptionLabel={(option) => option.name}
+                options={options}
+                loading={loading}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        onChange={(evt) => {
+                            // console.log(evt.target.value); 
+                            setQueryString(evt.target.value);
+                        }}
+                        value={queryString}
+                        label="Search for ingredients"
+                        variant="outlined"
+                        InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                                <React.Fragment>
+                                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                    {params.InputProps.endAdornment}
+                                </React.Fragment>
+                            ),
+                        }}
+                    />
+                )}
+            />
+
+            {/* recipes here */}
+            Current Recipe
+            <div>
+                {ingredientList.map((ingredient) => <ul key={ingredient.productId.value}>{ingredient.name}</ul>)}
+            </div>
+        </>
     );
 }
 
