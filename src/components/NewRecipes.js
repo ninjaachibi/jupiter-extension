@@ -12,6 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ButtonBar from './buttons/ButtonBar'
 
 const query = `
 query myQuery($queryString: String!) {
@@ -144,9 +145,19 @@ export default function NewRecipes() {
 
             {/* recipes here */}
             Current Recipe
-            <div className="new-recipe-title">
-                <TextField id="standard-basic" label="Recipe Name" />
+            <div style={{ flexDirection: "row" }}>
+                <div className="new-recipe-title">
+                    <TextField id="standard-basic" label="Recipe Name" />
+                </div>
+                <ButtonBar
+                    leftOnPress={() => { console.log('cancel new recipe') }}
+                    rightOnPress={() => { console.log('save new recipe') }}
+                    leftText="Cancel"
+                    rightText="Save"
+                />
+
             </div>
+
             <div className="new-recipe-list">
                 <List >
                     {Object.values(ingredientList).map((ingredient) =>

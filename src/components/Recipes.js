@@ -49,7 +49,7 @@ class Cards extends Component {
                                 <NewRecipes />
                                 <SectionHeader
                                     title="My recipes"
-                                    subtitle="Modify existing recipes"
+                                    subtitle="See and Modify existing recipes"
                                 />
                                 {/* TODO: MyRecipes component */}
                                 <CardItem />

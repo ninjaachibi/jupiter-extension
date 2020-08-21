@@ -19,20 +19,24 @@ class ButtonBar extends Component {
 
   render() {
     const { classes } = this.props;
+    const { leftOnPress, rightOnPress } = this.props;
+    const { leftText, rightText } = this.props;
 
     return (
       <div className={classes.spaceTop}>
         <Button
+          onClick={leftOnPress}
           className={classes.primary}
         >
-          Delete
+          {leftText}
         </Button>
         <Button
           variant="contained"
           color="primary"
           className={classes.secondary}
+          onClick={rightOnPress}
         >
-          Edit
+          {rightText}
         </Button>
       </div>
     )
