@@ -5,6 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import CardItem from "./cards/CardItem";
 import Topbar from "./Topbar";
 import SectionHeader from "./typo/SectionHeader";
+import NewRecipes from "./NewRecipes"
+
 const backgroundShape = require("../images/shape.svg");
 
 const styles = theme => ({
@@ -44,10 +46,7 @@ class Cards extends Component {
                         >
                             <Grid item xs={12}>
                                 {/* TODO: New recipes component */}
-                                <SectionHeader
-                                    title="New recipe"
-                                    subtitle="Create a new recipe"
-                                />
+                                <NewRecipes />
                                 <SectionHeader
                                     title="My recipes"
                                     subtitle="Modify existing recipes"
