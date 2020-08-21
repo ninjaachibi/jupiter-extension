@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.2.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/styles": "^4.0.0",
+    "firebase": "^7.19.0",
     "gh-pages": "^2.0.1",
     "numeral": "^2.0.6",
     "opencollective-postinstall": "^2.0.2",
