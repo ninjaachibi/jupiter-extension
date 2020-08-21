@@ -187,7 +187,7 @@ class Dashboard extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <Topbar currentPath={currentPath} />
+        {/* <Topbar currentPath={currentPath} /> */}
         <div className={classes.root}>
           <Grid container justify="center">
             <Grid

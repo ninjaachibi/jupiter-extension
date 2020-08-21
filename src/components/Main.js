@@ -9,8 +9,6 @@ import Button from "@material-ui/core/Button";
 import InstructionDialog from "./dialogs/InstructionDialog";
 import SwipeDialog from "./dialogs/SwipeDialog";
 
-import Topbar from "./Topbar";
-
 const backgroundShape = require("../images/shape.svg");
 
 const styles = theme => ({
@@ -119,7 +117,6 @@ class Main extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <Topbar />
         <div className={classes.root}>
           <Grid container justify="center">
             <Grid

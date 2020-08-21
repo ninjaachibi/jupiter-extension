@@ -8,9 +8,9 @@ import Signup from './components/Signup'
 import ScrollToTop from './components/ScrollTop'
 import Recipes from './components/Recipes'
 import Login from './components/Login'
+import Topbar from './components/Topbar'
 
-const user = null;
-
+const user = null; // TODO: useContext later
 
 function PrivateRoute({ children, ...rest }) {
   return (
@@ -37,6 +37,8 @@ export default function (props) {
   return (
     <HashRouter>
       <ScrollToTop>
+        <Topbar />
+
         <Switch>
           <Route exact path='/' component={Main} />
           <PrivateRoute exact path='/recipes' >
