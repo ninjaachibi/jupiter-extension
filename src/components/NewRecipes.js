@@ -42,7 +42,8 @@ async function searchProducts(queryString) {
 
 export default function NewRecipes() {
     const [queryString, setQueryString] = React.useState(""); // TODO: add typescript
-    const [ingredientList, setIngredientList] = React.useState([]); // Array<Ingredient> // TODO: add typescript for an Ingredient {id, name, ct}
+    // TODO: add typescript for an RecipeItem {productId, name, ct}
+    const [ingredientList, setIngredientList] = React.useState({}); // Map<productId => <RecipeItem>>
 
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
@@ -95,11 +96,19 @@ export default function NewRecipes() {
                 onChange={(evt, val, reason) => {
                     console.log(evt, val, reason)
                     if (reason === 'select-option') {
-                        setIngredientList([...ingredientList, val]); // TODO: don't allow duplicates
+                        const newIngredientList = { ...ingredientList };
+                        if (newIngredientList[val.productId.value] != null) {
+                            newIngredientList[val.productId.value].count++;
+                        }
+                        else {
+                            newIngredientList[val.productId.value] = {...val, count:1};
+                        }
+
+                        setIngredientList(newIngredientList); 
                         setQueryString("")
                     }
                 }}
-                getOptionSelected={(option, value) => option.name === value.name}
+                getOptionSelected={(option, value) => option.name === value.name} // TODO: suppress warning
                 getOptionLabel={(option) => option.name}
                 options={options}
                 loading={loading}
@@ -129,7 +138,9 @@ export default function NewRecipes() {
             {/* recipes here */}
             Current Recipe
             <div>
-                {ingredientList.map((ingredient) => <ul key={ingredient.productId.value}>{ingredient.name}</ul>)}
+                {Object.values(ingredientList).map((ingredient) =>
+                    <ul key={ingredient.productId.value}>{`${ingredient.name} count:${ingredient.count}`}</ul>
+                )}
             </div>
         </>
     );
