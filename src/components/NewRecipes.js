@@ -5,6 +5,13 @@ import TextField from '@material-ui/core/TextField';
 import SectionHeader from "./typo/SectionHeader";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Autocomplete } from '@material-ui/lab';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const query = `
 query myQuery($queryString: String!) {
@@ -101,10 +108,10 @@ export default function NewRecipes() {
                             newIngredientList[val.productId.value].count++;
                         }
                         else {
-                            newIngredientList[val.productId.value] = {...val, count:1};
+                            newIngredientList[val.productId.value] = { ...val, count: 1 };
                         }
 
-                        setIngredientList(newIngredientList); 
+                        setIngredientList(newIngredientList);
                         setQueryString("")
                     }
                 }}
@@ -137,10 +144,41 @@ export default function NewRecipes() {
 
             {/* recipes here */}
             Current Recipe
-            <div>
-                {Object.values(ingredientList).map((ingredient) =>
-                    <ul key={ingredient.productId.value}>{`${ingredient.name} count:${ingredient.count}`}</ul>
-                )}
+            <div className="recipe-list">
+                <List >
+                    {Object.values(ingredientList).map((ingredient) =>
+                        <ListItem key={ingredient.productId.value} divider>
+                            <ListItemIcon>
+                                {/* TODO: handle 0 and negative */}
+                                <TextField
+                                    id="outlined-number"
+                                    label="Number"
+                                    type="number"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    variant="outlined"
+                                    value={ingredient.count}
+                                    onChange={(evt) => {
+                                        const newIngredientList = { ...ingredientList };
+                                        // console.log(ingredient)
+                                        newIngredientList[ingredient.productId.value].count = parseInt(evt.target.value)
+                                        setIngredientList(newIngredientList);
+                                    }}
+                                />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={`${ingredient.name}`}
+                            />
+                            <ListItemSecondaryAction>
+                                <IconButton edge="end" aria-label="delete">
+                                    {/* TODO: add deletion functionality w/ pressing the icon */}
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>,
+                    )}
+                </List>
             </div>
         </>
     );
