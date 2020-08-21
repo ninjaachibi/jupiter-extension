@@ -7,8 +7,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Autocomplete } from '@material-ui/lab';
 
 const query = `
-query searchProduct {
-  search(query: "bread", page: 1) {
+query myQuery($queryString: String!) {
+  search(query: $queryString, page: 0) {
     productId {
       value
     }
@@ -19,14 +19,19 @@ const url = 'https://graphql.jupiter.co/';
 const opts = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query })
 };
 
-async function searchProducts(query) {
+async function searchProducts(queryString) {
     try {
-        const response = await fetch(url, opts)
+        const response = await fetch(url, {
+            ...opts,
+            body: JSON.stringify({
+                query,
+                variables: { queryString }
+            })
+        })
             .then(res => res.json())
-        // console.log(response)
+        console.log(queryString, response.data.search)
         return response;
     }
     catch (e) {
@@ -46,12 +51,12 @@ export default function NewRecipes() {
     React.useEffect(() => {
         let active = true;
 
-        if (!loading) {
-            return undefined;
-        }
+        // if (!loading) {
+        //     return undefined;
+        // }
 
         (async () => {
-            const response = await searchProducts(query);
+            const response = await searchProducts(queryString);
             console.log(response.data.search)
 
             if (active) {
@@ -62,7 +67,7 @@ export default function NewRecipes() {
         return () => {
             active = false;
         };
-    }, [loading]);
+    }, [loading, queryString]);
 
     React.useEffect(() => {
         if (!open) {
@@ -93,6 +98,10 @@ export default function NewRecipes() {
             renderInput={(params) => (
                 <TextField
                     {...params}
+                    onChange={(evt) => {
+                        // console.log(evt.target.value); 
+                        setQueryString(evt.target.value);
+                    }}
                     label="Search for ingredients"
                     variant="outlined"
                     InputProps={{
