@@ -43,10 +43,16 @@ class Cards extends Component {
                             className={classes.grid}
                         >
                             <Grid item xs={12}>
+                                {/* TODO: New recipes component */}
                                 <SectionHeader
-                                    title="Cards"
-                                    subtitle="One page with a list of a collection"
+                                    title="New recipe"
+                                    subtitle="Create a new recipe"
                                 />
+                                <SectionHeader
+                                    title="My recipes"
+                                    subtitle="Modify existing recipes"
+                                />
+                                {/* TODO: MyRecipes component */}
                                 <CardItem />
                             </Grid>
                         </Grid>
