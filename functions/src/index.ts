@@ -23,7 +23,7 @@ const app = express();
 const main = express();
 
 //add the path to receive request and set json as bodyParser to process the body 
-main.use('/api/v1', app);
+main.use('/', app);
 main.use(bodyParser.json());
 main.use(bodyParser.urlencoded({ extended: false }));
 
@@ -32,6 +32,7 @@ const db = admin.firestore();
 const userCollection = 'users';
 
 app.get('/', (req, res) => {
+    console.log('hello world')
     res.send('Hello World!')
 })
 
