@@ -8,7 +8,7 @@ const Menu = [
     pathname: "/recipes"
   },
   {
-    label: "Dashboard",
+    label: "Browse",
     pathname: "/dashboard"
   },
   {
