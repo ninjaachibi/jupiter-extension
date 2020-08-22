@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, HashRouter, Switch, Redirect } from 'react-router-dom'
 import Dashboard from './components/Dashboard'
 import Wizard from './components/Wizard'
@@ -9,10 +9,9 @@ import ScrollToTop from './components/ScrollTop'
 import Recipes from './components/Recipes'
 import Login from './components/Login'
 import Topbar from './components/Topbar'
+import { UserContext } from "./providers/UserProvider";
 
-const user = null; // TODO: useContext later
-
-function PrivateRoute({ children, ...rest }) {
+function PrivateRoute({ children, user, ...rest }) {
   return (
     <Route
       {...rest}
@@ -33,6 +32,7 @@ function PrivateRoute({ children, ...rest }) {
 }
 
 export default function (props) {
+  const user = useContext(UserContext);
 
   return (
     <HashRouter>
@@ -41,7 +41,7 @@ export default function (props) {
 
         <Switch>
           <Route exact path='/' component={Main} />
-          <PrivateRoute exact path='/recipes' >
+          <PrivateRoute exact path='/recipes' user={user}>
             <Recipes />
           </PrivateRoute>
           <Route exact path='/dashboard' component={Dashboard} />

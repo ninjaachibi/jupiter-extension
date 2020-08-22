@@ -1,5 +1,7 @@
 
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../providers/UserProvider";
+import { auth } from "../firebase"; // for sign out
 
 import TextField from '@material-ui/core/TextField';
 import SectionHeader from "./typo/SectionHeader";
@@ -13,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ButtonBar from './buttons/ButtonBar'
+import { Typography } from "@material-ui/core";
 
 const query = `
 query myQuery($queryString: String!) {
@@ -49,6 +52,9 @@ async function searchProducts(queryString) {
 }
 
 export default function NewRecipes() {
+    const user = useContext(UserContext);
+    console.log('user', user);
+
     const [queryString, setQueryString] = React.useState(""); // TODO: add typescript
     // TODO: add typescript for an RecipeItem {productId, name, ct}
     const [ingredientList, setIngredientList] = React.useState({}); // Map<productId => <RecipeItem>>
@@ -87,6 +93,9 @@ export default function NewRecipes() {
 
     return (
         <>
+            <Typography>
+                Welcome, {user ? user.displayName : "Guest"}
+            </Typography>
             <SectionHeader
                 title="New recipe"
                 subtitle="Create a new recipe"
@@ -144,7 +153,9 @@ export default function NewRecipes() {
             />
 
             {/* recipes here */}
-            Current Recipe
+            <Typography>
+                Current Recipe
+            </Typography>
             <div style={{ flexDirection: "row" }}>
                 <div className="new-recipe-title">
                     <TextField id="standard-basic" label="Recipe Name" />

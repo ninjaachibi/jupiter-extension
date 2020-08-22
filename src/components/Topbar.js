@@ -15,6 +15,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import { Link as MaterialLink } from "@material-ui/core";
 import Menu from "./Menu";
+import { auth } from '../firebase'
 
 const logo = require("../images/logo.svg");
 
@@ -100,26 +101,26 @@ class Topbar extends Component {
     window.scrollTo(0, 0);
   }
 
-  current = () => {
-    if (this.props.currentPath === "/home") {
-      return 0;
-    }
-    if(this.props.currentPath === "/recipes") {
-      return 1;
-    }
-    if (this.props.currentPath === "/dashboard") {
-      return 2;
-    }
-    if (this.props.currentPath === "/signup") {
-      return 3;
-    }
-    if (this.props.currentPath === "/wizard") {
-      return 4;
-    }
-    if (this.props.currentPath === "/cards") {
-      return 5;
-    }
-  };
+  // current = () => {
+  //   if (this.props.currentPath === "/home") {
+  //     return 0;
+  //   }
+  //   if (this.props.currentPath === "/recipes") {
+  //     return 1;
+  //   }
+  //   if (this.props.currentPath === "/dashboard") {
+  //     return 2;
+  //   }
+  //   if (this.props.currentPath === "/signup") {
+  //     return 3;
+  //   }
+  //   if (this.props.currentPath === "/wizard") {
+  //     return 4;
+  //   }
+  //   if (this.props.currentPath === "/cards") {
+  //     return 5;
+  //   }
+  // };
 
   render() {
     const { classes } = this.props;
@@ -133,15 +134,12 @@ class Topbar extends Component {
                 <Typography variant="h6" color="inherit" noWrap>
                   <Link to="/" className={classes.link}>
                     <img width={20} src={logo} alt="" />
-                    <span className={classes.tagline}>Material Sense</span>
+                    <span className={classes.tagline}>Jupiter Recipes</span>
                   </Link>
                 </Typography>
               </div>
               {!this.props.noTabs && (
                 <React.Fragment>
-                  <div className={classes.productLogo}>
-                    <Typography>A material UI Template</Typography>
-                  </div>
                   <div className={classes.iconContainer}>
                     <IconButton
                       onClick={this.mobileMenuOpen}
@@ -182,7 +180,7 @@ class Topbar extends Component {
                       </List>
                     </SwipeableDrawer>
                     <Tabs
-                      value={this.current() || this.state.value}
+                      // value={this.current() || this.state.value}
                       indicatorColor="primary"
                       textColor="primary"
                       onChange={this.handleChange}

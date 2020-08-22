@@ -3,9 +3,11 @@ import withStyles from "@material-ui/styles/withStyles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import CardItem from "./cards/CardItem";
-import Topbar from "./Topbar";
 import SectionHeader from "./typo/SectionHeader";
 import NewRecipes from "./NewRecipes"
+import { auth } from "../firebase"; // for sign out
+import { Button } from "@material-ui/core";
+
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -26,15 +28,14 @@ const styles = theme => ({
     }
 });
 
-class Cards extends Component {
+class Recipes extends Component {
     render() {
         const { classes } = this.props;
-        const currentPath = this.props.location.pathname;
+        // const currentPath = this.props.location.pathname;
 
         return (
             <React.Fragment>
                 <CssBaseline />
-                <Topbar currentPath={currentPath} />
                 <div className={classes.root}>
                     <Grid container justify="center">
                         <Grid
@@ -45,6 +46,8 @@ class Cards extends Component {
                             className={classes.grid}
                         >
                             <Grid item xs={12}>
+                                <Button onClick={() => auth.signOut()} type="primary">Logout</Button>
+                                <Button type="primary">Refresh Page</Button>
                                 {/* TODO: New recipes component */}
                                 <NewRecipes />
                                 <SectionHeader
@@ -62,4 +65,4 @@ class Cards extends Component {
     }
 }
 
-export default withStyles(styles)(Cards);
+export default withStyles(styles)(Recipes);

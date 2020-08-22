@@ -4,6 +4,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import './App.css';
 import Routes from './routes'
 import { blue, indigo } from '@material-ui/core/colors'
+import UserProvider from "./providers/UserProvider";
 
 const theme = createMuiTheme({
   palette: {
@@ -28,9 +29,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <ThemeProvider theme={theme}>
-          <Routes />
-        </ThemeProvider>
+        <UserProvider>
+          <ThemeProvider theme={theme}>
+            <Routes />
+          </ThemeProvider>
+        </UserProvider>
       </div>
     );
   }

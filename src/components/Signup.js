@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {signInWithGoogle} from '../firebase'
 
 function Copyright() {
   return (
@@ -111,15 +112,17 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={(evt) => { console.log("clicked sign up") }}
           >
             Sign Up
           </Button>
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             color="secondary"
             className={classes.submit}
+            onClick={signInWithGoogle}
           >
             Sign In With Google
           </Button>
