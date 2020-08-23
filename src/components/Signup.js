@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,7 +10,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
 import {signInWithGoogle} from '../firebase'
+import { UserContext } from "../providers/UserProvider";
+
+import { Redirect } from 'react-router-dom'
+
 
 function Copyright() {
   return (
@@ -44,6 +49,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const user = useContext(UserContext);
+
+  // TODO: actually fix routing later, this is a pretty hacky fix
+  if (user != null) {
+    return (
+    <Redirect
+      to={{
+        pathname: "/recipes",
+        // state: { from: location }
+      }}
+    />);
+  }
+
 
   return (
     <Container component="main" maxWidth="xs">
