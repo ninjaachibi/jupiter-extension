@@ -54,27 +54,31 @@ function MyRecipes(props) {
                 subtitle="See and Modify existing recipes"
             />
             {
-                recipes.map(({ ingredientList, name }) => {
+                recipes.map(({ id, creator_uid, ingredientList, name }) => {
                     return (
-                        <Paper styles={{ padding: 10, margin: 10 }}>
-                            <SectionHeader
-                                title={name}
-                            />
-                            <List>
-                                {ingredientList.map((ingredient) =>
-                                    <ListItem key={ingredient.productId} >
-                                        <ListItemText
-                                            primary={`${ingredient.name}`}
-                                        />
-                                    </ListItem>
+                        <div key={id}>
+                            <Paper styles={{ padding: 10, margin: 10 }}>
+                                <SectionHeader
+                                    title={name}
+                                    subtitle={`creater uid: ${creator_uid}`}
+                                />
+                                <List>
+                                    {ingredientList.map((ingredient) =>
+                                        <ListItem key={ingredient.productId} >
+                                            <ListItemText
+                                                primary={`${ingredient.name}`}
+                                            />
+                                        </ListItem>
 
-                                )}
-                            </List>
-                            <ButtonBar
-                                leftText="Modify"
-                                rightText="Delete"
-                            />
-                        </Paper>)
+                                    )}
+                                </List>
+                                <ButtonBar
+                                    leftText="Modify"
+                                    rightText="Delete"
+                                />
+                            </Paper>
+                        </div>
+                    )
                 })
             }
         </div>

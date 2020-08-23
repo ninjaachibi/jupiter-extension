@@ -94,7 +94,9 @@ app.get('/recipes', async (req, res) => {
         const collection = uid ? db.collection("recipes").where("creator_uid", "==", uid) : db.collection("recipes")
 
         collection.get().then(function (querySnapshot) {
-            res.status(200).json(querySnapshot.docs.map(doc => doc.data()));
+            res.status(200).json(querySnapshot.docs.map(doc => {
+                return { id: doc.id, ...doc.data() }
+            }));
         });
     }
     catch (err) {
