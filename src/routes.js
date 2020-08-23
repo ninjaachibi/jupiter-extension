@@ -44,9 +44,7 @@ export default function (props) {
           <PrivateRoute exact path='/recipes' user={user}>
             <Recipes />
           </PrivateRoute>
-          <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/signup' component={Signup} />
-          <Route exact path='/wizard' component={Wizard} />
           <Route exact path='/cards' component={Cards} />
           <Route exact path='/login'>
             <Login />

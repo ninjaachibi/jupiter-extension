@@ -3,7 +3,6 @@ import withStyles from "@material-ui/styles/withStyles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import CardItem from "./cards/CardItem";
-import Topbar from "./Topbar";
 import SectionHeader from "./typo/SectionHeader";
 const backgroundShape = require("../images/shape.svg");
 
@@ -27,12 +26,10 @@ const styles = theme => ({
 class Cards extends Component {
   render() {
     const { classes } = this.props;
-    const currentPath = this.props.location.pathname;
 
     return (
       <React.Fragment>
         <CssBaseline />
-        {/* <Topbar currentPath={currentPath} /> */}
         <div className={classes.root}>
           <Grid container justify="center">
             <Grid
