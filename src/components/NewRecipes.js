@@ -16,6 +16,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ButtonBar from './buttons/ButtonBar'
 import { Typography } from "@material-ui/core";
+import Button from '@material-ui/core/Button';
 
 const query = `
 query myQuery($queryString: String!) {
@@ -51,13 +52,34 @@ async function searchProducts(queryString) {
 
 }
 
+const createRecipe = (creator_uid, name, ingredientList) => {
+    fetch('http://localhost:5001/jupiter-extension-robert/us-central1/webApi/recipes', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            creator_uid,
+            name: name ? name : "my recipe",
+            ingredientList
+        })
+    })
+        .then((response) => {
+            console.log(response);
+            return response.json();
+        })
+        .then(res => { console.log('recipe created ', res) })
+        .catch(err => { console.error(err) });
+}
+
 export default function NewRecipes() {
     const user = useContext(UserContext);
-    console.log('user', user);
+    // console.log(user)
 
     const [queryString, setQueryString] = React.useState(""); // TODO: add typescript
     // TODO: add typescript for an RecipeItem {productId, name, ct}
     const [ingredientList, setIngredientList] = React.useState({}); // Map<productId => <RecipeItem>>
+    const [recipeName, setRecipeName] = React.useState("");
 
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
@@ -72,7 +94,7 @@ export default function NewRecipes() {
 
         (async () => {
             const response = await searchProducts(queryString);
-            console.log(response.data.search)
+            // console.log(response.data.search)
 
             if (active) {
                 setOptions(response.data.search)
@@ -90,6 +112,9 @@ export default function NewRecipes() {
         }
     }, [open]);
     // TODO: add save, cancel buttons
+
+    // console.log(ingredientList, Object.values(ingredientList))
+
 
     return (
         <>
@@ -111,14 +136,14 @@ export default function NewRecipes() {
                     setOpen(false);
                 }}
                 onChange={(evt, val, reason) => {
-                    console.log(evt, val, reason)
+                    console.log('event click', evt, val, reason)
                     if (reason === 'select-option') {
                         const newIngredientList = { ...ingredientList };
                         if (newIngredientList[val.productId.value] != null) {
                             newIngredientList[val.productId.value].count++;
                         }
                         else {
-                            newIngredientList[val.productId.value] = { ...val, count: 1 };
+                            newIngredientList[val.productId.value] = { name: val.name, productId: val.productId.value, count: 1 };
                         }
 
                         setIngredientList(newIngredientList);
@@ -158,11 +183,11 @@ export default function NewRecipes() {
             </Typography>
             <div style={{ flexDirection: "row" }}>
                 <div className="new-recipe-title">
-                    <TextField id="standard-basic" label="Recipe Name" />
+                    <TextField id="standard-basic" label="Recipe Name" onChange={(evt) => setRecipeName(evt.target.value)} />
                 </div>
                 <ButtonBar
                     leftOnPress={() => { console.log('cancel new recipe') }}
-                    rightOnPress={() => { console.log('save new recipe') }}
+                    rightOnPress={() => createRecipe(user.uid, recipeName, Object.values(ingredientList))}
                     leftText="Cancel"
                     rightText="Save"
                 />
@@ -187,7 +212,7 @@ export default function NewRecipes() {
                                     onChange={(evt) => {
                                         const newIngredientList = { ...ingredientList };
                                         // console.log(ingredient)
-                                        newIngredientList[ingredient.productId.value].count = parseInt(evt.target.value)
+                                        newIngredientList[ingredient.productId].count = parseInt(evt.target.value)
                                         setIngredientList(newIngredientList);
                                     }}
                                 />

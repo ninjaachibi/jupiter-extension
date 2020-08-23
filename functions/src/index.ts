@@ -12,6 +12,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as express from 'express';
 import * as bodyParser from "body-parser";
+var cors = require('cors');
 
 //initialize firebase inorder to access its services
 admin.initializeApp(functions.config().firebase);
@@ -20,6 +21,8 @@ const auth = admin.auth();
 
 //initialize express server
 const app = express();
+app.use(cors());
+
 const main = express();
 
 //add the path to receive request and set json as bodyParser to process the body 
@@ -46,36 +49,58 @@ app.get('/authUsers', (req, res) => {
     }).catch((error) => console.log(error));
 })
 
-interface User {
-    firstName: String,
-    lastName: String,
-    email: String,
-    areaNumber: String,
-    department: String,
-    id: String,
-    contactNumber: String
+// interface User {
+//     firstName: String,
+//     lastName: String,
+//     email: String,
+//     areaNumber: String,
+//     department: String,
+//     id: String,
+//     contactNumber: String
+// }
+
+interface RecipeItem {
+    productId: String;
+    name: String;
+    count: Number;
+}
+
+interface Recipe {
+    creator_uid: String
+    recipeName: String;
+    ingredientList: Array<RecipeItem>;
 }
 
 // create new recipe 
-// Create new user
 app.post('/recipes', async (req, res) => {
-    try {
-        const user: User = {
-            firstName: req.body['firstName'],
-            lastName: req.body['lastName'],
-            email: req.body['email'],
-            areaNumber: req.body['areaNumber'],
-            department: req.body['department'],
-            id: req.body['id'],
-            contactNumber: req.body['contactNumber']
-        }
 
-        const newDoc = await db.collection(userCollection).add(user);
-        res.status(201).send(`Created a new user: ${newDoc.id}`);
+    try {
+        const recipe: Recipe = req.body
+
+        console.log(recipe)
+        const newRecipe = await db.collection("recipes").add(recipe);
+        res.status(201).json(`Created a new recipe: ${newRecipe.id}`);
     } catch (error) {
-        res.status(400).send(`User should cointain firstName, lastName, email, areaNumber, department, id and contactNumber!!!`)
+        res.status(400).json(`Error in creating recipe`)
     }
 });
+
+// gets all recipes
+app.get('/recipes', async (req, res) => {
+    try {
+        const { uid } = req.query;
+        console.log('uid is', uid)
+
+        const collection = uid ? db.collection("recipes").where("creator_uid", "==", uid) : db.collection("recipes")
+
+        collection.get().then(function (querySnapshot) {
+            res.status(200).json(querySnapshot.docs.map(doc => doc.data()));
+        });
+    }
+    catch (err) {
+        res.status(400).json(`Error in getting recipe`)
+    }
+})
 
 //get all users from db
 app.get('/users', async (req, res) => {
