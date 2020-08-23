@@ -12,7 +12,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as express from 'express';
 import * as bodyParser from "body-parser";
-var cors = require('cors');
+const cors = require('cors');
 
 //initialize firebase inorder to access its services
 admin.initializeApp(functions.config().firebase);
@@ -97,7 +97,8 @@ app.get('/recipes', async (req, res) => {
             res.status(200).json(querySnapshot.docs.map(doc => {
                 return { id: doc.id, ...doc.data() }
             }));
-        });
+        })
+            .catch(err => console.log(err))
     }
     catch (err) {
         res.status(400).json(`Error in getting recipe`)
@@ -111,10 +112,13 @@ app.delete('/recipes', (req, res) => {
     }
 
     try {
-        db.collection("recipes").doc(`${id}`).delete().then(function () {
-            console.log("Document successfully deleted!");
-            res.status(200).json("doc successfully deleted")
-        })
+        db.collection("recipes").doc(`${id}`).delete()
+            .then(function () {
+                console.log("Document successfully deleted!");
+                res.status(200).json("doc successfully deleted")
+            })
+            .catch(err => console.log(err))
+
     }
     catch (error) {
         console.error("Error removing document: ", error);

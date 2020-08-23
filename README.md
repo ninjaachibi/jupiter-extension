@@ -30,12 +30,13 @@ The main files of interest are in `./src`, the front-end, and `./functions`, the
 TODO
 
 ## TODO
-* add update/deletion functionality for recipes
+* add update/<s>deletion</s> functionality for recipes
 * migrate to typescript on the client side
 * deploy firebase functions to prod
 * add real-time event listeners for FireStore document updates
 * move hard-coded fetch calls to some util function
 * implement user access permissions for deleting/modifying only their own recipes
+* add jupiter theming
 
 ## Available Scripts
 
