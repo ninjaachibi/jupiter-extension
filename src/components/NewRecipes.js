@@ -17,6 +17,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ButtonBar from './buttons/ButtonBar'
 import { Typography } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 
 const query = `
 query myQuery($queryString: String!) {
@@ -43,7 +44,7 @@ async function searchProducts(queryString) {
             })
         })
             .then(res => res.json())
-        console.log(queryString, response.data.search)
+        // console.log(queryString, response.data.search)
         return response;
     }
     catch (e) {
@@ -52,27 +53,33 @@ async function searchProducts(queryString) {
 
 }
 
-const createRecipe = (creator_uid, name, ingredientList) => {
-    fetch('http://localhost:5001/jupiter-extension-robert/us-central1/webApi/recipes', {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            creator_uid,
-            name: name ? name : "my recipe",
-            ingredientList
-        })
-    })
-        .then((response) => {
-            console.log(response);
-            return response.json();
-        })
-        .then(res => { console.log('recipe created ', res) })
-        .catch(err => { console.error(err) });
-}
+
 
 export default function NewRecipes() {
+    // TODO: move this out to a requests.js file
+    const createRecipe = (creator_uid, name, ingredientList) => {
+        fetch('http://localhost:5001/jupiter-extension-robert/us-central1/webApi/recipes', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                creator_uid,
+                name: name ? name : "my recipe",
+                ingredientList
+            })
+        })
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+            .then(res => {
+                console.log('recipe created ', res);
+                setIngredientList([])
+            })
+            .catch(err => { console.error(err) });
+    }
+
     const user = useContext(UserContext);
     // console.log(user)
 
@@ -111,10 +118,6 @@ export default function NewRecipes() {
             setOptions([]);
         }
     }, [open]);
-    // TODO: add save, cancel buttons
-
-    // console.log(ingredientList, Object.values(ingredientList))
-
 
     return (
         <>
@@ -181,55 +184,56 @@ export default function NewRecipes() {
             <Typography>
                 Current Recipe
             </Typography>
-            <div style={{ flexDirection: "row" }}>
-                <div className="new-recipe-title">
-                    <TextField id="standard-basic" label="Recipe Name" onChange={(evt) => setRecipeName(evt.target.value)} />
+            <Paper>
+                <div style={{ flexDirection: "row" }}>
+                    <div className="new-recipe-title">
+                        <TextField id="standard-basic" label="Recipe Name" onChange={(evt) => setRecipeName(evt.target.value)} />
+                    </div>
+                    <ButtonBar
+                        leftOnPress={() => { console.log('cancel new recipe') }}
+                        rightOnPress={() => createRecipe(user.uid, recipeName, Object.values(ingredientList))}
+                        leftText="Cancel"
+                        rightText="Save"
+                    />
+
                 </div>
-                <ButtonBar
-                    leftOnPress={() => { console.log('cancel new recipe') }}
-                    rightOnPress={() => createRecipe(user.uid, recipeName, Object.values(ingredientList))}
-                    leftText="Cancel"
-                    rightText="Save"
-                />
 
-            </div>
-
-            <div className="new-recipe-list">
-                <List >
-                    {Object.values(ingredientList).map((ingredient) =>
-                        <ListItem key={ingredient.productId.value} divider>
-                            <ListItemIcon>
-                                {/* TODO: handle 0 and negative */}
-                                <TextField
-                                    id="outlined-number"
-                                    label="Number"
-                                    type="number"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    variant="outlined"
-                                    value={ingredient.count}
-                                    onChange={(evt) => {
-                                        const newIngredientList = { ...ingredientList };
-                                        // console.log(ingredient)
-                                        newIngredientList[ingredient.productId].count = parseInt(evt.target.value)
-                                        setIngredientList(newIngredientList);
-                                    }}
+                <div className="new-recipe-list">
+                    <List >
+                        {Object.values(ingredientList).map((ingredient) =>
+                            <ListItem key={ingredient.productId.value} divider>
+                                <ListItemIcon>
+                                    {/* TODO: handle 0 and negative */}
+                                    <TextField
+                                        id="outlined-number"
+                                        label="Number"
+                                        type="number"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        variant="outlined"
+                                        value={ingredient.count}
+                                        onChange={(evt) => {
+                                            const newIngredientList = { ...ingredientList };
+                                            newIngredientList[ingredient.productId].count = parseInt(evt.target.value)
+                                            setIngredientList(newIngredientList);
+                                        }}
+                                    />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={`${ingredient.name}`}
                                 />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={`${ingredient.name}`}
-                            />
-                            <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label="delete">
-                                    {/* TODO: add deletion functionality w/ pressing the icon */}
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ListItemSecondaryAction>
-                        </ListItem>,
-                    )}
-                </List>
-            </div>
+                                <ListItemSecondaryAction>
+                                    <IconButton edge="end" aria-label="delete">
+                                        {/* TODO: add deletion functionality w/ pressing the icon */}
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </ListItemSecondaryAction>
+                            </ListItem>,
+                        )}
+                    </List>
+                </div>
+            </Paper>
         </>
     );
 }
