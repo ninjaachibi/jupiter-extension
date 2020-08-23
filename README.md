@@ -1,3 +1,25 @@
+# Jupiter Extension
+This is the take home project from Jupiter-co.
+
+On the front-end I used `React` and `material-ui`. On the backend, I used `Node.js`/`TypeScript` with Firebase CloudStore and Firebase Cloud Functions. 
+
+## File structure
+The main files of interest are in `./src`, the front-end, and `./functions`, the backend.
+```
+TODO
+```
+
+
+## Demo
+TODO
+
+## TODO
+* add update/deletion functionality for recipes
+* migrate to typescript on the client side
+* deploy firebase functions to prod
+* add real-time event listeners for FireStore document updates
+* move hard-coded fetch calls to some util function
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -55,12 +77,6 @@ _the 2222 port intend to make work on Azure websites as container for default, c
 
 ### Publish at Github pages
 `yarn deploy`
-
-## Screenshots
-![Dashboard](screenshot-dashboard.png)
-![Signup](screenshot-signup.png)
-![Wizard](screenshot-wizard.png)
-![Cards](screenshot-cards.png)
 
 ## Contributors
 
