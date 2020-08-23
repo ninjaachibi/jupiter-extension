@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -106,15 +104,15 @@ export default function SignUp() {
               />
             </Grid>
           </Grid>
+          <text>(currently only implemented Google Sign In)</text>
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
             onClick={(evt) => { console.log("clicked sign up") }}
           >
-            Sign Up
+            Sign Up 
           </Button>
           <Button
             // type="submit"
