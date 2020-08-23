@@ -1,30 +1,3 @@
-Material Sense is being sponsored by the following tool; please help to support us by taking a look and signing up to a free trial
-<a href="https://tracking.gitads.io/?repo=material-sense"><img src="https://images.gitads.io/material-sense" alt="GitAds"/></a>
-
-### If you're using this template, please add below your project and send a PR:
-- Alexandre Magno (http://ahorta.io)
-
-### Help to fund this project
-https://opencollective.com/material-sense
-
-#### Projects using this template:
-- Ahorta Client: https://github.com/worknenjoy/ahorta-client
-
-
-# React Material UI template - Material Sense
-A full simple application for react [material ui](https://material-ui.com/)
-
-## Features
-- Responsive
-- Include a Graph using [recharts](https://github.com/recharts/recharts)
-- With [Router](https://github.com/ReactTraining/react-router) included
-- A docker container for production build
-- Created with [Create react app](https://github.com/facebook/create-react-app)
-
-![Dashboard](screenshot-dashboard.png)
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
