@@ -76,6 +76,7 @@ export default function NewRecipes() {
             .then(res => {
                 console.log('recipe created ', res);
                 setIngredientList([])
+                setRecipeName("")
             })
             .catch(err => { console.error(err) });
     }
@@ -187,11 +188,17 @@ export default function NewRecipes() {
             <Paper>
                 <div style={{ flexDirection: "row" }}>
                     <div className="new-recipe-title">
-                        <TextField id="standard-basic" label="Recipe Name" onChange={(evt) => setRecipeName(evt.target.value)} />
+                        <TextField id="standard-basic" label="Recipe Name" onChange={(evt) => setRecipeName(evt.target.value)} value={recipeName}/>
                     </div>
                     <ButtonBar
-                        leftOnPress={() => { console.log('cancel new recipe') }}
-                        rightOnPress={() => createRecipe(user.uid, recipeName, Object.values(ingredientList))}
+                        leftOnPress={() => {
+                            setIngredientList([]);
+                            setRecipeName("");
+                        }}
+                        rightOnPress={() => {
+                            createRecipe(user.uid, recipeName, Object.values(ingredientList));
+                            // TODO: add recipe to react state, we'll need to move the current recipes from myRecipes to the parent component
+                        }}
                         leftText="Cancel"
                         rightText="Save"
                     />

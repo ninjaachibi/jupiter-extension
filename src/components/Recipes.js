@@ -52,10 +52,8 @@ function Recipes(props) {
                         <Grid item xs={12}>
                             <Button onClick={() => auth.signOut()} type="primary">Logout</Button>
                             <Button type="primary">Refresh Page</Button>
-                            {/* TODO: New recipes component */}
                             <NewRecipes />
                             <MyRecipes />
-                            {/* TODO: MyRecipes component */}
                         </Grid>
                     </Grid>
                 </Grid>

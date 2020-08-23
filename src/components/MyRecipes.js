@@ -76,6 +76,7 @@ function MyRecipes(props) {
                                 <List>
                                     {ingredientList.map((ingredient) =>
                                         <ListItem key={ingredient.productId} >
+                                            <ListItemText>Count: {ingredient.count + "  "}</ListItemText>
                                             <ListItemText
                                                 primary={`${ingredient.name}`}
                                             />
@@ -86,7 +87,10 @@ function MyRecipes(props) {
                                 <ButtonBar
                                     leftText="Modify"
                                     rightText="Delete"
-                                    rightOnPress={() => deleteRecipe(id)}
+                                    rightOnPress={() => {
+                                        deleteRecipe(id)
+                                        setRecipes(recipes.filter(recipe => recipe.id !== id));
+                                    }}
                                     leftOnPress={()=>{console.log('modify clicked')}}
                                 />
                             </Paper>
