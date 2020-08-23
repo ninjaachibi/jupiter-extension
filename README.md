@@ -6,7 +6,23 @@ On the front-end I used `React` and `material-ui`. On the backend, I used `Node.
 ## File structure
 The main files of interest are in `./src`, the front-end, and `./functions`, the backend.
 ```
-TODO
+.
+├── _package.json
+├── _functions // our back-end
+│   └── _src
+│       └── index.ts 
+├── _src //  our front end 
+│   ├── App.js
+│   ├── routes.js
+│   └── components 
+│       └── MyRecipes.js 
+│       └── NewRecipes.js 
+│       └── Recipes.js 
+│       └── Sigup.js 
+│       └── Login.js 
+│       └── ...
+...
+
 ```
 
 
@@ -19,6 +35,7 @@ TODO
 * deploy firebase functions to prod
 * add real-time event listeners for FireStore document updates
 * move hard-coded fetch calls to some util function
+* implement user access permissions for deleting/modifying only their own recipes
 
 ## Available Scripts
 
