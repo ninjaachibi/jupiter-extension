@@ -17,7 +17,7 @@ import { Link as MaterialLink } from "@material-ui/core";
 import Menu from "./Menu";
 import { auth } from '../firebase'
 
-const logo = require("../images/logo.svg");
+const logo = require("../images/logo.png");
 
 const styles = theme => ({
   appBar: {
@@ -132,7 +132,7 @@ class Topbar extends Component {
             <Grid item xs={12} className={classes.flex}>
               <div className={classes.inline}>
                 <Typography variant="h6" color="inherit" noWrap>
-                  <Link to="/" className={classes.link}>
+                  <Link to="/recipes" className={classes.link}>
                     <img width={20} src={logo} alt="" />
                     <span className={classes.tagline}>Jupiter Recipes</span>
                   </Link>

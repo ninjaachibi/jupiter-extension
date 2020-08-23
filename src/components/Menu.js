@@ -1,8 +1,8 @@
 const Menu = [
-  {
-    label: "Home",
-    pathname: "/"
-  },
+  // {
+  //   label: "Home",
+  //   pathname: "/"
+  // },
   {
     label: "recipes",
     pathname: "/recipes"
