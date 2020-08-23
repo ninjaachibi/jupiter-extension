@@ -28,6 +28,21 @@ const styles = theme => ({
     }
 });
 
+const getRecipes = async (creator_uid) => {
+    fetch('http://localhost:5001/jupiter-extension-robert/us-central1/webApi/recipes', {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then((response) => {
+            console.log(response);
+            return response.json();
+        })
+        .then(res => { console.log('recipe created ', res) })
+        .catch(err => { console.error(err) });
+}
+
 class Recipes extends Component {
     render() {
         const { classes } = this.props;
