@@ -15,6 +15,17 @@ import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase"; // for sign out
 import ButtonBar from "./buttons/ButtonBar";
 
+const URL = `http://localhost:5001/jupiter-extension-robert/us-central1/webApi/recipes`;
+
+const deleteRecipe = async (id) => {
+    await fetch(URL + `?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+}
+
 function MyRecipes(props) {
     const user = useContext(UserContext);
     // const currentPath = this.props.location.pathname;
@@ -22,9 +33,9 @@ function MyRecipes(props) {
 
     const getRecipes = async (uid) => {
         // const url = `https://postman-echo.com/get?foo1=bar1&foo2=bar2`
-        const url = `http://localhost:5001/jupiter-extension-robert/us-central1/webApi/recipes?uid=${uid}`
 
-        const apiCall = await fetch(url, {
+
+        const apiCall = await fetch(URL + `?uid=${uid}`, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
@@ -75,6 +86,8 @@ function MyRecipes(props) {
                                 <ButtonBar
                                     leftText="Modify"
                                     rightText="Delete"
+                                    rightOnPress={() => deleteRecipe(id)}
+                                    leftOnPress={()=>{console.log('modify clicked')}}
                                 />
                             </Paper>
                         </div>

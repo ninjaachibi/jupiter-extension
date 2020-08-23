@@ -104,6 +104,24 @@ app.get('/recipes', async (req, res) => {
     }
 })
 
+app.delete('/recipes', (req, res) => {
+    const { id } = req.query;
+    if (id == undefined) {
+        res.status(400).json(`recipe id is null`)
+    }
+
+    try {
+        db.collection("recipes").doc(`${id}`).delete().then(function () {
+            console.log("Document successfully deleted!");
+            res.status(200).json("doc successfully deleted")
+        })
+    }
+    catch (error) {
+        console.error("Error removing document: ", error);
+        res.status(400).json(`Error in getting recipe`)
+    }
+})
+
 //get all users from db
 app.get('/users', async (req, res) => {
     try {
