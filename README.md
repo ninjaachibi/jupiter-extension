@@ -27,7 +27,7 @@ The main files of interest are in `./src`, the front-end, and `./functions`, the
 
 
 ## Demo
-TODO
+[click here](https://www.loom.com/share/1d46289d0691483ba66837329cec0026)
 
 ## TODO
 * add update/<s>deletion</s> functionality for recipes
